@@ -1,0 +1,184 @@
+with "gtkada.gpr";
+
+library project Gtkada_Canvas is
+    Version := "18.0w";    --  same as gtkada
+
+   case GtkAda.BUILD is
+      when "relocatable" =>
+         for Library_Kind use "relocatable";
+         for Library_Version use "libgtkada_canvas.so." & Version;
+         for Object_Dir use "obj/relocatable";
+         for Library_ALI_Dir use "ali/relocatable";
+         for Library_Name use "gtkada_canvas";
+      when "static-pic" =>
+         for Library_Kind use "static-pic";
+         for Object_Dir use "obj/static-pic";
+         for Library_ALI_Dir use "ali/static-pic";
+         for Library_Version use "libgtkada_canvas_pic.a";
+         for Library_Name use "gtkada_canvas_pic";
+      when "static" =>
+         for Library_Kind use "static";
+         for Object_Dir use "obj/static";
+         for Library_ALI_Dir use "ali/static";
+         for Library_Name use "gtkada_canvas";
+         for Library_Version use "libgtkada_canvas.a";
+   end case;
+   for Source_Dirs use ("./");
+   for Library_Dir use "lib/";
+
+   for Source_Files use (
+      "gtkada-canvas_abstract_item_pkg.adb",
+      "gtkada-canvas_abstract_item_pkg.ads",
+      "gtkada-canvas_container_item_pkg.adb",
+      "gtkada-canvas_container_item_pkg.ads",
+      "gtkada-canvas_defs.adb",
+      "gtkada-canvas_defs.ads",
+      "gtkada-canvas_editable_text_item_pkg.adb",
+      "gtkada-canvas_editable_text_item_pkg.ads",
+      "gtkada-canvas_ellipse_item_pkg.adb",
+      "gtkada-canvas_ellipse_item_pkg.ads",
+      "gtkada-canvas_hr_item_pkg.adb",
+      "gtkada-canvas_hr_item_pkg.ads",
+      "gtkada-canvas_image_item_pkg.adb",
+      "gtkada-canvas_image_item_pkg.ads",
+      "gtkada-canvas_item_pkg.adb",
+      "gtkada-canvas_item_pkg.ads",
+      "gtkada-canvas_link_pkg.adb",
+      "gtkada-canvas_link_pkg.ads",
+      "gtkada-canvas_link_pkg-best_route_pkg.adb",
+      "gtkada-canvas_link_pkg-best_route_pkg.ads",
+      "gtkada-canvas_link_pkg-links.adb",
+      "gtkada-canvas_link_pkg-links.ads",
+      "gtkada-canvas_list_model_pkg.adb",
+      "gtkada-canvas_list_model_pkg.ads",
+      "gtkada-canvas_model_pkg.adb",
+      "gtkada-canvas_model_pkg.ads",
+      "gtkada-canvas_model_pkg-layers.adb",
+      "gtkada-canvas_model_pkg-layers.ads",
+      "gtkada-canvas_polyline_item_pkg.adb",
+      "gtkada-canvas_polyline_item_pkg.ads",
+      "gtkada-canvas_rect_item_pkg.adb",
+      "gtkada-canvas_rect_item_pkg.ads",
+      "gtkada-canvas_rtrees_models.adb",
+      "gtkada-canvas_rtrees_models.ads",
+      "gtkada-canvas_rtrees_pkg.adb",
+      "gtkada-canvas_rtrees_pkg.ads",
+      "gtkada-canvas_text_item_pkg.adb",
+      "gtkada-canvas_text_item_pkg.ads",
+      "gtkada-canvas_view_pkg.adb",
+      "gtkada-canvas_view_pkg.ads",
+      "gtkada-canvas_view_pkg-astar.adb",
+      "gtkada-canvas_view_pkg-astar.ads",
+      "gtkada-canvas_view_pkg-objects.adb",
+      "gtkada-canvas_view_pkg-objects.ads",
+      "gtkada-canvas_view_pkg-views.adb",
+      "gtkada-canvas_view_pkg-views.ads",
+      "gtkada-style_pkg-cubic_bezier.ads",
+      "gtkada-style_pkg-cubic_bezier.adb",
+      "gtkada-style_pkg.ads",
+      "gtkada-style_pkg.adb"
+   );
+
+   package Compiler is
+      Ada_Switches := (
+           "-g",             --  debug
+           "-gnat2022",      --  Ada 2022
+           --  "-O0",            --  optimization level 0
+           "-fstack-check",  --  stact check
+           --      "-gnatwe",        --  warnings and style checks are errors
+           "-gnatwa",        --  all optional warnings
+           "-gnatwC",        --  Suppress warnings on conditionals
+           "-gnatwJ",        --  Disable warnings on obsolescent features     
+           "-gnatwM",        --  Disable warnings on modified but unreferenced variables
+           --  "-gnatwd",        --  implicit dereferencing
+           "-gnatw.d",       --  tag warnings with -gnatw switch
+           --  "-gnatwh",        --  hiding
+           "-gnatw.h",       --  holes in record layouts
+           "-gnatw.j",       --  late primitives of tagged types
+           --  "-gnatw.k",       --  redefinition of names in standard
+           "-gnatwl",        --  elaboration warnings
+           "-gnatw.l",       --  inherited aspects
+           --  "-gnatw.n",       --  atomic synchronization
+           "-gnatwo",        --  address clause overlay
+           "-gnatw.o",       --  values set by out parameters ignored
+           "-gnatw.q",       --  questionable layout of record types
+           "-gnatw_r",       --  out-of-order record representation clauses
+           "-gnatw.s",       --  overridden size clause
+           --  "-gnatwt",        --  tracking of deleted conditional code
+           "-gnatw.u",       --  unordered enumeration
+           --  "-gnatw.w",       --  use of Warnings Off
+           --  "-gnatw.y",       --  reasons for package needing body
+           "-gnata",         --  enable assettions
+           "-gnateE",        --  generate extra info in exception msgs
+           "-gnatQ",         --  generate ALI even if illegalities
+           "-gnatVa",        --  validity checking all
+           "-gnatVe",        --  validity checks for elementary components
+           "-gnaty",         --  enable built-in style checks
+           "-gnaty3",        --  Identation level
+           "-gnatya",        --  Check attribute casing
+           "-gnatyb",        --  Blanks not allowed at statement end
+           "-gnatyc",        --  Check comments, double space
+           "-gnatye",        --  Check end/exit labels
+           "-gnatyf",        --  No form feeds or vertical tabs
+           "-gnatyh",        --  No horizontal tabs
+           "-gnatyi",        --  Check if-then layout
+           "-gnatyk",        --  Check keyword casing
+           "-gnatyl",        --  Check layout
+           "-gnatyM120",     --  Set maximum line length
+           "-gnatyn",        --  Check casing of entities in Standard
+           "-gnatyp",        --  Check pragma casing
+           "-gnatyr",        --  Check references
+           "-gnatys",        --  Check separate specs
+           "-gnatyS",        --  Check no statements after then/else
+           "-gnatyt",        --  Check token spacing
+           "-gnatf",         --  Full errors
+           "-gnatn"          --  Inlining across units for subprograms with pragma Inline
+     );
+     case GtkAda.BUILD is
+        when "relocatable" =>
+           for Switches ("Ada") use Ada_Switches & ("-O2");
+        when "static" =>
+           for Switches ("Ada") use Ada_Switches & ("-O0");
+        when "static-pic" =>
+           for Switches ("Ada") use Ada_Switches & ("-fPIC") & ("-O2");
+      end case;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-E");
+   end Binder;
+
+   package Builder is
+      for Switches ("ada") use ("-s", "-vl", "-j3");
+   end Builder;
+
+
+   package Install is
+      for Prefix use "/opt/GNAT/12.2.1/";
+      case GtkAda.BUILD is
+         when "relocatable" =>
+            for Sources_Subdir use "include/gtkada_canvas/";
+            for ALI_Subdir use      "lib/gtkada_canvas.relocatable/";
+            for LIB_Subdir use      "lib/gtkada_canvas.relocatable/";
+         when "static-pic" =>
+            for Sources_Subdir use "include/gtkada_canvas/";
+            for ALI_Subdir use     "lib/gtkada_canvas.static-pic/";
+            for LIB_Subdir use     "lib/gtkada_canvas.static-pic/";
+         when "static" =>
+            for Sources_Subdir use "include/gtkada_canvas/";
+            for ALI_Subdir use     "lib/gtkada_canvas.static";
+            for LIB_Subdir use     "lib/gtkada_canvas.static";
+      end case;
+   end Install;
+   -- usage: in a terminal the following three commands under root
+   --   /opt/GNAT/12.2.1/bin/gprinstall -Pgtkada_canvas --uninstall
+   --   /opt/GNAT/12.2.1/bin/gprinstall -Pgtkada_canvas -p -f \
+   --              -XLIBRARY_TYPE=relocatable --build-name=relocatable \
+                   --build-var=GtkAda_Canvas
+   --   /opt/GNAT/12.2.1/bin/gprinstall -Pgtkada_canvas -p -f \
+   --              -XLIBRARY_TYPE=static-pic --build-name=static-pic \
+                   --build-var=GtkAda_Canvas
+   --   /opt/GNAT/12.2.1/bin/gprinstall -Pgtkada_canvas -p -f \
+   --              -XLIBRARY_TYPE=static --build-name=static \
+                   --build-var=GtkAda_Canvas
+end Gtkada_Canvas;

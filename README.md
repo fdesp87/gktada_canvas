@@ -2,7 +2,7 @@
 This is an evolution of the GtkAda Canvas package.
 ==================================================
 
-The Ada package for canvas that comes with GtkAda is monolithic, menaing that nearly all
+The Ada package for canvas that comes with GtkAda is monolithic, meaning that nearly all
 concepts are defined in such package.
 
 Instead, we have split the original package in several smaller ones.
